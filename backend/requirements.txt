@@ -1,0 +1,5 @@
+transformers
+torch
+sentencepiece
+beautifulsoup4
+requests
