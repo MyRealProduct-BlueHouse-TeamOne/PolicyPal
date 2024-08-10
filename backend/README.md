@@ -1,2 +1,2 @@
 ## Run the service:
-python main.py
+python mvp.py
