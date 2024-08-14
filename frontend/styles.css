@@ -1,0 +1,13 @@
+body {
+	font-family: Arial, sans-serif;
+	padding: 10px;
+}
+h1 {
+	font-size: 20px;
+	text-align: center;
+}
+input, button {
+	display: block;
+	margin: 10px auto;
+	width: 80%;
+}
