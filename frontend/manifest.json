@@ -1,15 +1,55 @@
+
 {
-	"manifest_version": 3,
-	"name": "PolicyPal",
-	"version": "1.0",
-	"description": "Summarize Terms and Conditions with ease",
-	"permissions": ["activeTab", "scripting"],
-	"action": {
-		"default_popup": "popup.html",
-		"default_icon": {
-			"16": "images/icon16.png",
-			"48": "images/icon48.png",
-			"128": "images/icon128.png"
-		}
-	}
-}
+    "manifest_version": 3,
+    "name": "Policy Pal",
+    "version": "1.0",
+    "description": "Summarize terms and conditions, highlighting key problematic areas.",
+    "permissions": [
+      "activeTab",
+      "scripting"
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "images/icon-16.png",
+        "48": "images/icon-48.png",
+        "128": "images/icon-128.png"
+      }
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "*://*/*terms*",
+          "*://*/*services*",
+          "*://*/*conditions*",
+          "*://*/*policy*",
+          "*://*/*policies*",
+          "*://*/*legal*",
+          "*://*/*disclaimer*",
+          "*://*/*privacy*",
+          "*://*/*agreement*",
+          "*://*/*notice*",
+          "*://*/*compliance*",
+          "*://*/*contract*",
+          "*://*/*regulation*",
+          "*://*/*rights*"
+        ],
+        "js": ["content.js"],
+        "run_at": "document_end"
+      }
+    ],
+    "web_accessible_resources": [
+    {
+      "resources": ["styles.css"],
+      "matches": ["<all_urls>"]
+    }],
+    "icons": {
+      "16": "images/icon-16.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    }
+  }
+  
