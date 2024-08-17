@@ -2,22 +2,25 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from bs4 import BeautifulSoup
 import requests
-
 import pandas as pd
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-
+import torch  # Add torch to handle CUDA
 import time
-
-from inference import summarize_tos
 
 app = Flask(__name__)
 CORS(app)
 
+# Check if CUDA is available and set the device accordingly
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 # Load the model and tokenizer once when the app starts
-model_path = "ditilbart"
+model_path = "distilbart"
 tokenizer = AutoTokenizer.from_pretrained(model_path)
-model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
+model = AutoModelForSeq2SeqLM.from_pretrained(model_path).to(device)
 model.eval()  # Set the model to evaluation mode
+
+# Move the model to the appropriate device (CPU or GPU)
+model.to(device)
 
 def scrape_terms_and_conditions(url):
     response = requests.get(url)
@@ -29,8 +32,11 @@ def scrape_terms_and_conditions(url):
 def summarize_text(text, max_length=512):
     # Tokenize the input text
     start = time.time()
-    text = "Summarize the following Terms of Service in bullet points:\n\n"+text
-    inputs = tokenizer(text, max_length=1024, truncation=True, return_tensors="pt")
+    text = "Summarize the following Terms of Service in bullet points:\n\n" + text
+    inputs = tokenizer(text, max_length=1024, truncation=True, return_tensors="pt").to(device)
+
+    # Move the inputs to the same device as the model
+    inputs = {key: value.to(device) for key, value in inputs.items()}
     
     # Generate the summary
     summary_ids = model.generate(
@@ -50,8 +56,8 @@ def summarize_text(text, max_length=512):
     if last_punctuation != -1:
         summary = summary[:last_punctuation + 1]
     
-    end = "Time taken: "+ str((time.time() - start)/60) + "\n\n"
-    return end+summary
+    end = "Time taken: " + str((time.time() - start) / 60) + "\n\n"
+    return end + summary
 
 @app.route('/summarize', methods=['POST'])
 def summarize():

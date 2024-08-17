@@ -149,11 +149,11 @@ trainer = Seq2SeqTrainer(
 trainer.train()
 
 # Save the model and tokenizer
-trainer.save_model("ditilbart")
-tokenizer.save_pretrained("ditilbart")
+trainer.save_model("distilbart")
+tokenizer.save_pretrained("distilbart")
 
 # Define the path to the saved model and tokenizer
-model_path = "ditilbart"
+model_path = "distilbart"
 
 # Load the model and tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_path)

@@ -5,7 +5,7 @@ from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments, AutoModelForS
 import time
 
 # Load the model and tokenizer once when the app starts
-model_path = "ditilbart"
+model_path = "distilbart"
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
 model.eval()  # Set the model to evaluation mode
