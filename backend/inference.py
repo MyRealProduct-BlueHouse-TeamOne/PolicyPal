@@ -1,23 +1,15 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
 from bs4 import BeautifulSoup
 import requests
-
 import pandas as pd
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-
+from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments, AutoModelForSeq2SeqLM, AutoTokenizer
 import time
-
-from inference import summarize_tos
-
-app = Flask(__name__)
-CORS(app)
 
 # Load the model and tokenizer once when the app starts
 model_path = "ditilbart"
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
 model.eval()  # Set the model to evaluation mode
+
 
 def scrape_terms_and_conditions(url):
     response = requests.get(url)
@@ -26,10 +18,13 @@ def scrape_terms_and_conditions(url):
     terms_text = ' '.join([para.get_text() for para in paragraphs])
     return terms_text
 
+
 def summarize_text(text, max_length=512):
     # Tokenize the input text
     start = time.time()
-    text = "Summarize the following Terms of Service in bullet points:\n\n"+text
+    text = "Summarize the following Terms of Service in bullet points so that each point is around 30 words max:\n\n"+text
+    print(text)
+    print(len(text))
     inputs = tokenizer(text, max_length=1024, truncation=True, return_tensors="pt")
     
     # Generate the summary
@@ -53,16 +48,13 @@ def summarize_text(text, max_length=512):
     end = "Time taken: "+ str((time.time() - start)/60) + "\n\n"
     return end+summary
 
-@app.route('/summarize', methods=['POST'])
-def summarize():
-    data = request.json
-    url = data.get('url')
-   
+
+def main():
+    url = "https://www.dropbox.com/terms"
     # Summarization logic
     terms_text = scrape_terms_and_conditions(url)
     summary = summarize_text(terms_text)
-    
-    return jsonify({'summary': summary})
+    print(summary)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    main()

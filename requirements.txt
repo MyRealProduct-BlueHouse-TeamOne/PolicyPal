@@ -14,7 +14,6 @@ itsdangerous==2.2.0
 Jinja2==3.1.4
 MarkupSafe==2.1.5
 mccabe==0.7.0
-numpy==2.0.1
 packaging==24.1
 pycodestyle==2.12.1
 pyflakes==3.2.0
@@ -22,10 +21,14 @@ PyYAML==6.0.2
 regex==2024.7.24
 requests==2.32.3
 safetensors==0.4.4
-soupsieve==2.5
-tokenizers==0.19.1
+soupsieve==2.
 tqdm==4.66.5
 transformers==4.44.0
 typing_extensions==4.12.2
 urllib3==2.2.2
 Werkzeug==3.0.3
+nltk==3.8.1
+pandas==2.2.2
+scikit-learn==1.5.1
+torch==2.0.1
+accelerate==0.33.0
