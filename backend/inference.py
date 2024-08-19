@@ -1,26 +1,15 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-import torch  # Add torch to handle CUDA
+from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments, AutoModelForSeq2SeqLM, AutoTokenizer
 import time
-
-app = Flask(__name__)
-CORS(app)
-
-# Check if CUDA is available and set the device accordingly
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load the model and tokenizer once when the app starts
 model_path = "distilbart"
 tokenizer = AutoTokenizer.from_pretrained(model_path)
-model = AutoModelForSeq2SeqLM.from_pretrained(model_path).to(device)
+model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
 model.eval()  # Set the model to evaluation mode
 
-# Move the model to the appropriate device (CPU or GPU)
-model.to(device)
 
 def scrape_terms_and_conditions(url):
     response = requests.get(url)
@@ -29,14 +18,14 @@ def scrape_terms_and_conditions(url):
     terms_text = ' '.join([para.get_text() for para in paragraphs])
     return terms_text
 
+
 def summarize_text(text, max_length=512):
     # Tokenize the input text
     start = time.time()
-    text = "Summarize the following Terms of Service in bullet points:\n\n" + text
-    inputs = tokenizer(text, max_length=1024, truncation=True, return_tensors="pt").to(device)
-
-    # Move the inputs to the same device as the model
-    inputs = {key: value.to(device) for key, value in inputs.items()}
+    text = "Summarize the following Terms of Service in bullet points so that each point is around 30 words max:\n\n"+text
+    print(text)
+    print(len(text))
+    inputs = tokenizer(text, max_length=1024, truncation=True, return_tensors="pt")
     
     # Generate the summary
     summary_ids = model.generate(
@@ -56,19 +45,16 @@ def summarize_text(text, max_length=512):
     if last_punctuation != -1:
         summary = summary[:last_punctuation + 1]
     
-    end = "Time taken: " + str((time.time() - start) / 60) + "\n\n"
-    return end + summary
+    end = "Time taken: "+ str((time.time() - start)/60) + "\n\n"
+    return end+summary
 
-@app.route('/summarize', methods=['POST'])
-def summarize():
-    data = request.json
-    url = data.get('url')
-   
+
+def main():
+    url = "https://www.dropbox.com/terms"
     # Summarization logic
     terms_text = scrape_terms_and_conditions(url)
     summary = summarize_text(terms_text)
-    
-    return jsonify({'summary': summary})
+    print(summary)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    main()
