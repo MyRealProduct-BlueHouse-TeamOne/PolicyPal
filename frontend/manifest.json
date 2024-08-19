@@ -5,6 +5,8 @@
     "version": "1.0",
     "description": "Summarize terms and conditions, highlighting key problematic areas.",
     "permissions": [
+      
+      "tabs",
       "activeTab",
       "scripting"
     ],
