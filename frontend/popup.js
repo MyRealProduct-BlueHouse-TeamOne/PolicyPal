@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // **New code to send URL to back-end and trigger content script**
         summaryButton.addEventListener('click', () => {
             // Send the URL to the back-end
-            fetch('http://54.241.209.95:80/summarize', {
+            fetch('http://localhost:5000/summarize', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
