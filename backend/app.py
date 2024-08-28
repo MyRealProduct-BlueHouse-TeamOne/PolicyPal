@@ -31,8 +31,8 @@ def scrape_terms_and_conditions(url):
 
 def summarize_text(text, max_length=512):
     # Tokenize the input text
-    start = time.time()
-    text = "Summarize the following Terms of Service in bullet points:\n\n" + text
+    # start = time.time()
+    text = "Summarize the following Terms of Service in bullet points (each bullet point should be no longer than 200 characters):\n\n" + text
     inputs = tokenizer(text, max_length=1024, truncation=True, return_tensors="pt").to(device)
 
     # Move the inputs to the same device as the model
@@ -56,18 +56,30 @@ def summarize_text(text, max_length=512):
     if last_punctuation != -1:
         summary = summary[:last_punctuation + 1]
     
-    end = "Time taken: " + str((time.time() - start) / 60) + "\n\n"
-    return end + summary
+    # end = "Time taken: " + str((time.time() - start) / 60) + "\n\n"
+    return summary
 
 @app.route('/summarize', methods=['POST'])
 def summarize():
+    start_time = time.time()
+    
+    print(f"Retreiving URL...")
     data = request.json
     url = data.get('url')
+    print(f"SUCCESS: URL received. URL: {url}")
    
     # Summarization logic
+    print(f"Scraping website...")
     terms_text = scrape_terms_and_conditions(url)
-    summary = summarize_text(terms_text)
+    print(f"SUCCESS: Website scraped. Terms text retreived.")
     
+    print(f"Summarizing text...")
+    summary = summarize_text(terms_text)
+    print(f"SUCCESS: Terms summarized.")
+    print(f"Time taken: {float(time.time() - start_time) / 60.0}")
+    
+    print(f"Summary generated. Type: {type(summary)}")
+    print(f"Returning summary...")
     return jsonify({'summary': summary})
 
 if __name__ == '__main__':
