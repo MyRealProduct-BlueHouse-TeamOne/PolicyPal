@@ -1,0 +1,62 @@
+accelerate
+beautifulsoup4
+blinker
+certifi
+charset-normalizer
+click
+cmake
+filelock
+flake8
+Flask
+Flask-Cors
+fsspec
+huggingface-hub
+idna
+itsdangerous
+Jinja2
+joblib
+lit
+MarkupSafe
+mccabe
+mpmath
+networkx
+nltk
+numpy
+# nvidia-cublas-cu11
+# nvidia-cuda-cupti-cu11
+# nvidia-cuda-nvrtc-cu11
+# nvidia-cuda-runtime-cu11
+# nvidia-cudnn-cu11
+# nvidia-cufft-cu11
+# nvidia-curand-cu11
+# nvidia-cusolver-cu11
+# nvidia-cusparse-cu11
+# nvidia-pyindex
+# nvidia-nccl-cu11
+# nvidia-nvtx-cu11
+packaging
+pandas
+psutil
+pycodestyle
+pyflakes
+python-dateutil
+pytz
+PyYAML
+regex
+requests
+safetensors
+scikit-learn
+scipy
+six
+soupsieve
+sympy
+threadpoolctl
+tokenizers
+torch
+tqdm
+transformers
+# triton
+typing_extensions
+tzdata
+urllib3
+Werkzeug
