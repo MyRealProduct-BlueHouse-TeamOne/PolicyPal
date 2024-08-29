@@ -103,6 +103,7 @@ function toggleSummaryCard() {
  * @returns {Promise<string>} The summary text returned from the server.
  */
 async function fetchSummary(terms) {
+  /*************make sure to have CORS****************/
   try {
     // Send a POST request to the server to get the summary
     const response = await fetch("http://localhost:3000/summarize", {
