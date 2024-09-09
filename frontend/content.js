@@ -1,98 +1,10 @@
-// const link = document.createElement('link');
-// link.href = chrome.runtime.getURL('../styles.css');
-// link.rel = 'stylesheet';
-// document.head.appendChild(link);
+// Create a link element to include the stylesheet for the summary card
+const link = document.createElement("link");
+link.href = chrome.runtime.getURL("../styles.css"); // Set the href to the stylesheet URL from the Chrome extension
+link.rel = "stylesheet"; // Set the rel attribute to stylesheet
+document.head.appendChild(link); // Append the link element to the document head
 
-// const bodyText=document.body.innerText;
-
-// //const summarizedText=await summarize(bodyText)
-// const sampleText="Lorem ipsum odor amet, consectetuer adipiscing elit. Velit a nunc per ultrices ac facilisi in semper. Lacinia malesuada ac magna neque adipiscing aenean gravida? Pharetra donec lacus, laoreet erat donec finibus consectetur. Lectus malesuada semper tristique amet aenean taciti lorem diam. Vitae vehicula tempus donec pharetra pulvinar diam quis faucibus. Lacinia fames vel mattis consectetur risus. Senectus justo faucibus ad facilisis proin eleifend. Vitae urna nascetur turpis turpis parturient feugiat nam. Tempus justo efficitur enim duis mauris auctor tellus eu. Platea arcu pharetra pulvinar vestibulum montes dapibus diam. Ante luctus blandit sagittis elit commodo nulla felis. Pellentesque ornare mus habitant felis tempus. Ligula class turpis et consequat nam. Consequat tellus consectetur penatibus semper nulla lectus. Aptent dictum sodales proin fusce egestas congue ridiculus tortor ex. Etiam imperdiet ex suspendisse neque non ornare mus facilisis. Bibendum efficitur augue, lobortis lobortis iaculis urna tortor. Phasellus eros id ut ut suspendisse. Aliquam interdum ut vitae aptent vitae etiam. Bibendum fusce feugiat fringilla arcu consequat ornare habitasse. Purus natoque quis commodo; penatibus donec potenti. Tempus fusce duis metus fusce enim justo nascetur tellus eleifend. Ultrices cras convallis sit ultricies aenean nec luctus. Lectus ultricies et viverra conubia, quam nostra sodales conubia. Conubia eros nascetur et, libero ridiculus id nec consequat. Ornare mollis sollicitudin bibendum luctus facilisi laoreet, vestibulum erat porta. Dictumst congue gravida maximus porttitor curabitur ad enim mattis. Dui sed blandit erat libero; varius accumsan nostra sem. Ante sagittis orci felis est dignissim suspendisse cras vehicula. Netus curabitur tellus nam consectetur sociosqu. Vulputate vel proin nisi morbi interdum. Dictum ipsum vulputate gravida amet justo orci dictum. Nec rutrum fermentum habitant quis urna; erat cubilia. Natoque fames suspendisse sociosqu morbi placerat rhoncus. Hendrerit erat convallis proin tempus a. Tortor libero dis cubilia tristique diam nam lacinia mattis. Ridiculus ullamcorper urna a suspendisse ultrices egestas ulla"
-
-
-// let isVisible = false;
-// let wrapper, toggleButton, card;
-
-// /**
-//  * Creates a DOM element with optional class name and text content.
-//  * @param {string} type - The type of the element (e.g., 'div', 'p').
-//  * @param {string} [className] - The class name to be added to the element.
-//  * @param {string} [textContent] - The text content to be set for the element.
-//  * @returns {HTMLElement} The created DOM element.
-//  */
-// function createElement(type, className, textContent) {
-//   const element = document.createElement(type);
-//   if (className) element.className = className;
-//   if (textContent) element.textContent = textContent;
-//   return element;
-// }
-
-// /**
-//  * Sets up the toggle button with click event listener.
-//  * @returns {HTMLElement} The toggle button element.
-//  */
-// function setupToggleButton() {
-//   toggleButton = createElement('div', 'toggle-button');
-//   toggleButton.addEventListener('click', toggleSummaryCard); // Attach click event listener
-//   return toggleButton;
-// }
-
-// /**
-//  * Sets up the summary card with header and text content.
-//  * @returns {HTMLElement} The summary card element.
-//  */
-// function setupCard() {
-//   card = createElement('div', 'summary-card');
-
-//   const cardHeader = createElement('div');
-//   const cardTitle = createElement('h1', null, 'Summary');
-//   cardHeader.appendChild(cardTitle);
-//   card.appendChild(cardHeader);
-
-//   const cardText = createElement('p', null, bodyText);
-//   card.appendChild(cardText);
-
-//   return card;
-// }
-
-// /**
-//  * Adds the summary card and toggle button to the document.
-//  */
-// function addSummaryCard() {
-//   wrapper = createElement('div', 'summary-card__wrapper');
-//   wrapper.appendChild(setupToggleButton());
-//   wrapper.appendChild(setupCard());
-
-//   document.body.appendChild(wrapper);
-// }
-
-// /**
-//  * Toggles the visibility of the summary card.
-//  */
-// function toggleSummaryCard() {
-//   if (isVisible) {
-//     // Slide out the card
-//     wrapper.style.transform = 'translateX(95%)';
-//   } else {
-//     // Slide in the card
-//     wrapper.style.transform = 'translateX(0)';
-//   }
-//   isVisible = !isVisible;
-// }
-
-// // Listen for messages from the Chrome extension
-// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-//   if (request.action === 'showSummaryCard' && !wrapper) {
-//     console.log("hooray");
-//     addSummaryCard();
-//   }
-// });
-
-// Revised code
-const link = document.createElement('link');
-link.href = chrome.runtime.getURL('../styles.css');
-link.rel = 'stylesheet';
-document.head.appendChild(link);
-
+// Initialize variables for tracking visibility and storing DOM elements
 let isVisible = false;
 let wrapper, toggleButton, card;
 
@@ -104,10 +16,10 @@ let wrapper, toggleButton, card;
  * @returns {HTMLElement} The created DOM element.
  */
 function createElement(type, className, textContent) {
-  const element = document.createElement(type);
-  if (className) element.className = className;
-  if (textContent) element.textContent = textContent;
-  return element;
+  const element = document.createElement(type); // Create the element of specified type
+  if (className) element.className = className; // Add class name if provided
+  if (textContent) element.textContent = textContent; // Set text content if provided
+  return element; // Return the created element
 }
 
 /**
@@ -115,45 +27,60 @@ function createElement(type, className, textContent) {
  * @returns {HTMLElement} The toggle button element.
  */
 function setupToggleButton() {
-  toggleButton = createElement('div', 'toggle-button');
-  toggleButton.addEventListener('click', toggleSummaryCard); // Attach click event listener
-  return toggleButton;
+  toggleButton = createElement("div", "toggle-button"); // Create the toggle button with a class name
+  toggleButton.addEventListener("click", toggleSummaryCard); // Attach click event listener to toggle the summary card
+  return toggleButton; // Return the toggle button element
 }
 
 /**
- * Sets up the summary card with header and text content.
- * @param {string} summaryText - The summary text to be displayed in the card.
- * @returns {HTMLElement} The summary card element.
+ * Sets up a loading card with shimmer effect elements.
+ * @returns {HTMLElement} The loading card element.
  */
-function setupCard(summaryText) {
-  card = createElement('div', 'summary-card');
+function setupLoadingCard() {
+  card = createElement("div", "summary-card"); // Create the summary card container
 
-  const cardHeader = createElement('div');
-  const cardTitle = createElement('h1', null, 'Summary');
-  cardHeader.appendChild(cardTitle);
-  card.appendChild(cardHeader);
+  const cardHeader = createElement("div"); // Create a header for the card
+  const cardTitle = createElement("h1", null, "Summary"); // Create a title element with the text 'Summary'
+  cardHeader.appendChild(cardTitle); // Append the title to the header
+  card.appendChild(cardHeader); // Append the header to the card
 
-  const summaryArray = summaryText.split("\n");
-
-  for (let point = 0; point < summaryArray.length; point++)
-  {
-    const cardText = createElement('p', null, summaryArray[point]);
-    card.appendChild(cardText);
+  // Add shimmer loading effects to simulate loading state
+  for (let i = 0; i < 10; i++) {
+    card.appendChild(createElement("div", "shimmerBG")); // Append shimmer background divs
   }
 
-  return card;
+  return card; // Return the loading card element
+}
+
+/**
+ * Adds text content to the summary card, removing loading animations.
+ * @param {string} summaryText - The summary text to be displayed in the card.
+ */
+function addCardText(summaryText) {
+  // Remove loading elements (shimmer effects) from the card
+  const blurredBGs = card.querySelectorAll(".shimmerBG");
+  console.log(blurredBGs); // Log the removed shimmer elements
+  blurredBGs.forEach((blurredBG) => card.removeChild(blurredBG)); // Remove each shimmer element from the card
+
+  // Split the summary text by new lines and add each line as a paragraph
+  const summaryArray = summaryText.split("\n");
+
+  for (let point = 0; point < summaryArray.length; point++) {
+    const cardText = createElement("p", null, summaryArray[point]); // Create a paragraph for each summary point
+    card.appendChild(cardText); // Append the paragraph to the card
+  }
+  return card; // Return the card with added text
 }
 
 /**
  * Adds the summary card and toggle button to the document.
- * @param {string} summaryText - The summary text to be displayed in the card.
  */
-function addSummaryCard(summaryText) {
-  wrapper = createElement('div', 'summary-card__wrapper');
-  wrapper.appendChild(setupToggleButton());
-  wrapper.appendChild(setupCard(summaryText));
+function addSummaryCard() {
+  wrapper = createElement("div", "summary-card__wrapper"); // Create a wrapper for the summary card and toggle button
+  wrapper.appendChild(setupToggleButton()); // Add the toggle button to the wrapper
+  wrapper.appendChild(setupLoadingCard()); // Add the loading card to the wrapper
 
-  document.body.appendChild(wrapper);
+  document.body.appendChild(wrapper); // Append the wrapper to the document body
 }
 
 /**
@@ -161,20 +88,53 @@ function addSummaryCard(summaryText) {
  */
 function toggleSummaryCard() {
   if (isVisible) {
-    // Slide out the card
-    wrapper.style.transform = 'translateX(95%)';
+    // Slide out the card when it is currently visible
+    wrapper.style.transform = "translateX(95%)";
   } else {
-    // Slide in the card
-    wrapper.style.transform = 'translateX(0)';
+    // Slide in the card when it is currently hidden
+    wrapper.style.transform = "translateX(0)";
   }
-  isVisible = !isVisible;
+  isVisible = !isVisible; // Toggle the visibility state
+}
+
+/**
+ * Fetches the summary from the server using the provided terms.
+ * @param {string} terms - The terms to summarize.
+ * @returns {Promise<string>} The summary text returned from the server.
+ */
+async function fetchSummary(terms) {
+  /*************make sure to have CORS****************/
+  try {
+    // Send a POST request to the server to get the summary
+    const response = await fetch("http://localhost:3000/summarize", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ terms }), // Include terms in the request body
+    });
+
+    // Check if the response status is OK
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`); // Throw error if response is not ok
+    }
+
+    const data = await response.json(); // Parse response JSON data
+    return data.summary; // Return the summary from the response
+  } catch (error) {
+    console.error("Failed to fetch summary:", error.message); // Log any errors encountered
+  }
 }
 
 // Listen for messages from the Chrome extension
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'showSummaryCard' && !wrapper) {
-    // Display the summary received from the popup.js script
-    console.log("Received summary. Displaying summary card...");
-    addSummaryCard(request.summary);
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+  // Check if the action is to show the summary card and the wrapper is not already created
+  if (request.action === "showSummaryCard" && !wrapper) {
+    // Display the summary card and fetch the summary from the server
+    addSummaryCard();
+    const terms = document.body.innerText; // Extract the text from the document body as terms
+    const response = await fetchSummary(terms); // Fetch summary for the terms
+    console.log(response); // Log the response for debugging
+    addCardText(response); // Add the summary text to the card
   }
 });
