@@ -4,3 +4,5 @@
 /myenv
 /venv
 /env
+/GeminiAPIBackend/.env
+/GeminiAPIBackend/node_modules
