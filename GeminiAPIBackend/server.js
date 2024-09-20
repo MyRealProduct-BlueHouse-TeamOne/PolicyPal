@@ -2,6 +2,8 @@ import express from "express";
 import { config as configDotenv } from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import cors from 'cors';
+import https from 'https';
+import fs from 'fs';
 
 configDotenv();
 const port = process.env.PORT || 3000;
@@ -48,6 +50,16 @@ app.post("/summarize", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server running on port ${port}`);
+// });
+
+// Load SSL credentials and create an HTTPS server
+// const privateKey = fs.readFileSync();
+// const certificate = fs.readFileSync();
+// const credentials = { key: privateKey, cert: certificate };
+// https.createServer(credentials, app).listen(port, () => {
+//   console.log(`Server running on port ${port}...`);
+// });
+
+export default app;
