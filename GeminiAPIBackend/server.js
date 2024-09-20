@@ -31,7 +31,7 @@ async function summarizeTerms(text) {
 
 // POST route to handle terms and conditions summarization
 app.post("/summarize", async (req, res) => {
-  console.log("summarizing...")
+  console.log("Summarizing...")
   const { terms } = req.body;
 
   // Error handling for missing or invalid request body

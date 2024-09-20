@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Heylo\" && exit 1",
+    "test": "echo \"Successful run!\" && exit 1",
     "run": "node server.js",
     "dev": "nodemon server.js"
   },
